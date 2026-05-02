@@ -419,9 +419,8 @@ section {
     color: var(--accent-2);
 }
 
-/* Add padding above LinkedIn buttons in the team section */
 .team-member .social-links {
-    margin-top: 10px; /* Adjust the value as needed */
+    margin-top: 1.2rem;
 }
 
 .tools-grid {
