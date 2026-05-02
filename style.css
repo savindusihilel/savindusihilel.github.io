@@ -419,6 +419,11 @@ section {
     color: var(--accent-2);
 }
 
+/* Add padding above LinkedIn buttons in the team section */
+.team-member .social-links {
+    margin-top: 10px; /* Adjust the value as needed */
+}
+
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
