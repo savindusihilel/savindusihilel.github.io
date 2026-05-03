@@ -61,4 +61,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     }
+
+    // Search Functionality
+    const searchInput = document.getElementById('site-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            
+            document.querySelectorAll('section').forEach(section => {
+                const title = section.querySelector('.section-title, h1');
+                const titleMatch = title && title.innerText.toLowerCase().includes(term);
+
+                const searchableElements = section.querySelectorAll('.glass-card:not(.contact-container), .timeline-item, .tool-item');
+                
+                let hasVisibleElement = false;
+
+                if (searchableElements.length > 0) {
+                    searchableElements.forEach(el => {
+                        const text = el.innerText.toLowerCase();
+                        if (titleMatch || text.includes(term)) {
+                            el.style.display = '';
+                            hasVisibleElement = true;
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+                }
+
+                // If no specific searchable elements or if none matched but section text matches
+                if (searchableElements.length === 0 || (!hasVisibleElement && section.innerText.toLowerCase().includes(term))) {
+                    if (titleMatch || section.innerText.toLowerCase().includes(term)) {
+                        hasVisibleElement = true;
+                        // If we are showing the section because its general text matched, show all its searchable elements too
+                        searchableElements.forEach(el => el.style.display = '');
+                    }
+                }
+
+                section.style.display = hasVisibleElement ? '' : 'none';
+            });
+            
+            // Handle doc groups to hide empty ones
+            document.querySelectorAll('.doc-group').forEach(group => {
+                const docs = group.querySelectorAll('.doc-card');
+                if (docs.length > 0) {
+                    const hasVisible = Array.from(docs).some(doc => doc.style.display !== 'none');
+                    group.style.display = hasVisible ? '' : 'none';
+                }
+            });
+        });
+    }
 });
